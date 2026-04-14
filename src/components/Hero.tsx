@@ -32,7 +32,6 @@ export default function Hero() {
         })}
       />
 
-      {/* tekst */}
       <div
         className={css({
           position: "absolute",
@@ -50,8 +49,7 @@ export default function Hero() {
             letterSpacing: "2px",
           })}
         >
-          DISCOVER CULTURE <br />
-          YOU’LL LOVE
+          Stichting Sendang Melatie
         </h1>
 
         <p
