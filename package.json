@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npx panda codegen && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "panda": "panda",
-    "panda:dev": "panda dev"
+    "panda:dev": "panda dev",
+    "panda:codegen": "panda codegen"
+
   },
   "dependencies": {
     "react": "^19.2.4",
