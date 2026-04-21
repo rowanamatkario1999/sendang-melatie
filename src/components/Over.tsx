@@ -1,8 +1,10 @@
 import React from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, paragraphStyle, h2Style } from './ui';
 
 export function Over({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <section id="over" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.05} motif="kawung" secondary="#8B4513" />
@@ -17,8 +19,8 @@ export function Over({ tweaks }: { tweaks: Tweaks }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1.2fr',
-            gap: 80,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1.2fr',
+            gap: isMobile ? 32 : 80,
             alignItems: 'start',
             marginTop: 48,
           }}
@@ -72,7 +74,7 @@ export function Over({ tweaks }: { tweaks: Tweaks }) {
               style={{
                 marginTop: 40,
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
                 gap: 24,
                 paddingTop: 32,
                 borderTop: '1px solid var(--line)',

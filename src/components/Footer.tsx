@@ -1,15 +1,17 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { NAV_ITEMS } from '../constants';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { LogoMark, BatikDivider } from './ui';
 
 export function Footer({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <footer
       style={{
         background: 'var(--bg)',
         borderTop: '1px solid var(--line)',
-        padding: '56px 48px 32px',
+        padding: `clamp(32px, 5vw, 56px) clamp(16px, 4vw, 48px) clamp(16px, 3vw, 32px)`,
       }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto 32px', display: 'flex', justifyContent: 'center', opacity: 0.5 }}>
@@ -20,12 +22,13 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
           maxWidth: 1280,
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
-          gap: 40,
+          gridTemplateColumns: isMobile ? '1fr' : 'auto 1fr auto',
+          gap: isMobile ? 24 : 40,
           alignItems: 'center',
-        }}
+          textAlign: isMobile ? 'center' : 'left',
+        } as React.CSSProperties}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, justifyContent: isMobile ? 'center' : 'flex-start' }}>
           <LogoMark size={36} accent={tweaks.accent} />
           <span
             style={{
@@ -38,7 +41,7 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
             Sendang Melatie
           </span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 28 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? 16 : 28, flexWrap: 'wrap' }}>
           {NAV_ITEMS.map((i) => (
             <a
               key={i.label}

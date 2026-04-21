@@ -493,8 +493,8 @@ export function SocialIcon({ icon, color }: { icon: string; color: string }) {
 }
 
 // ─── Shared style helpers ─────────────────────────────────────
-export const sectionStyle: React.CSSProperties = { padding: '128px 0', position: 'relative' };
-export const container: React.CSSProperties = { maxWidth: 1280, margin: '0 auto', padding: '0 48px' };
+export const sectionStyle: React.CSSProperties = { padding: 'clamp(64px, 10vw, 128px) 0', position: 'relative' };
+export const container: React.CSSProperties = { maxWidth: 1280, margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
 export const paragraphStyle: React.CSSProperties = {
   fontSize: 16,
   lineHeight: 1.7,

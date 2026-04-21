@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import {
   BatikPattern,
   JasmineSprinkle,
@@ -13,14 +14,15 @@ import {
 } from './ui';
 
 export function Contact({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   const [form, setForm] = useState({ name: '', email: '', msg: '' });
   const [sent, setSent] = useState(false);
 
   const socials = [
     { icon: 'tiktok', label: '@sendangmelatie', platform: 'TikTok', href: 'https://tiktok.com/@sendangmelatie' },
     { icon: 'instagram', label: '@sendang.melatie', platform: 'Instagram', href: 'https://instagram.com/sendang.melatie' },
-    { icon: 'facebook', label: 'Krawitan Sendang Melatie', platform: 'Facebook', href: '#' },
-    { icon: 'youtube', label: 'Krawitan Sendang Melatie', platform: 'YouTube', href: '#' },
+    { icon: 'facebook', label: 'Krawitan Sendang Melatie', platform: 'Facebook', href: 'https://www.facebook.com/people/Krawitan-Sendang-Melatie/61581632217897/' },
+    { icon: 'youtube', label: 'Krawitan Sendang Melatie', platform: 'YouTube', href: 'https://www.youtube.com/@KrawitanSendangMelatie' },
   ];
 
   return (
@@ -38,7 +40,14 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
       <JasmineSprinkle items={[{ top: '18%', right: '10%', size: 50, rotate: 22, opacity: 0.5 }]} />
       <div style={{ ...container, position: 'relative' }}>
         <SectionLabel num="06" label="Contact" accent={tweaks.accent} />
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, marginTop: 48 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? 48 : 80,
+            marginTop: 48,
+          }}
+        >
           <div>
             <h2 style={h2Style(tweaks.titleFont)}>
               Zin om aan te <em style={{ color: tweaks.accent }}>sluiten?</em>
@@ -51,7 +60,7 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
                 ['E-mail', 'info@sendangmelatie.nl'],
                 ['KvK', '42009424'],
               ].map(([k, v]) => (
-                <div key={k} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 24 }}>
+                <div key={k} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 16 }}>
                   <span
                     style={{
                       fontSize: 10,

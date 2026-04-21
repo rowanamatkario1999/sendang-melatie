@@ -1,16 +1,18 @@
 import React from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { BatikPattern, JasmineSprinkle, Placeholder, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
-export function Media({ tweaks }: { tweaks: Tweaks }) {
-  const tiles = [
-    { label: "PASAR MALAM '25", ratio: '4/5', span: 1 },
-    { label: 'GAMELAN REPETITIE', ratio: '1/1', span: 1 },
-    { label: 'WAYANG KULIT', ratio: '3/4', span: 1 },
-    { label: 'DANSGROEP', ratio: '16/11', span: 2 },
-    { label: 'WORKSHOP BASA JAWA', ratio: '4/5', span: 1 },
-  ];
+const TILES = [
+  { label: "PASAR MALAM '25", ratio: '4/5', span: 1 },
+  { label: 'GAMELAN REPETITIE', ratio: '1/1', span: 1 },
+  { label: 'WAYANG KULIT', ratio: '3/4', span: 1 },
+  { label: 'DANSGROEP', ratio: '16/11', span: 2 },
+  { label: 'WORKSHOP BASA JAWA', ratio: '4/5', span: 1 },
+];
 
+export function Media({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <section id="media" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.05} motif="parang" secondary="#A83232" />
@@ -25,8 +27,8 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 80,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? 16 : 80,
             marginTop: 48,
             alignItems: 'end',
           }}
@@ -37,7 +39,7 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
           <a
             href="#"
             style={{
-              justifySelf: 'end',
+              justifySelf: isMobile ? 'start' : 'end',
               fontSize: 11,
               letterSpacing: '0.24em',
               textTransform: 'uppercase',
@@ -53,12 +55,12 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
           style={{
             marginTop: 64,
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
             gap: 16,
           }}
         >
-          {tiles.map((t, i) => (
-            <div key={i} style={{ gridColumn: t.span === 2 ? 'span 2' : 'span 1' }}>
+          {TILES.map((t, i) => (
+            <div key={i} style={{ gridColumn: !isMobile && t.span === 2 ? 'span 2' : 'span 1' }}>
               <Placeholder label={t.label} ratio={t.ratio} />
             </div>
           ))}

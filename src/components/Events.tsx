@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, paragraphStyle, h2Style } from './ui';
 
 const EVENTS_DATA = [
@@ -15,6 +16,7 @@ const EVENTS_SPRINKLES = [
 ];
 
 export function Events({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <section
       id="events"
@@ -27,8 +29,8 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            gap: 80,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr',
+            gap: isMobile ? 16 : 80,
             marginTop: 48,
             alignItems: 'end',
           }}
@@ -47,10 +49,10 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
               href="#contact"
               style={{
                 display: 'grid',
-                gridTemplateColumns: '120px 1fr 1fr auto',
-                gap: 40,
+                gridTemplateColumns: isMobile ? '80px 1fr' : '120px 1fr 1fr auto',
+                gap: isMobile ? 16 : 40,
                 alignItems: 'center',
-                padding: '32px 0',
+                padding: '24px 0',
                 borderBottom: '1px solid var(--line)',
                 transition: 'padding-left 200ms',
               } as React.CSSProperties}
@@ -59,7 +61,7 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
             >
               <div
                 style={{
-                  fontSize: 13,
+                  fontSize: isMobile ? 11 : 13,
                   letterSpacing: '0.2em',
                   color: tweaks.accent,
                   fontWeight: 500,
@@ -67,25 +69,37 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
               >
                 {e.date}
               </div>
-              <div style={{ fontFamily: `'${tweaks.titleFont}', serif`, fontSize: 30, color: 'var(--text)' }}>
-                {e.title}
+              <div>
+                <div style={{ fontFamily: `'${tweaks.titleFont}', serif`, fontSize: isMobile ? 20 : 30, color: 'var(--text)' }}>
+                  {e.title}
+                </div>
+                {isMobile && (
+                  <div style={{ color: 'var(--text-dim)', fontSize: 13, marginTop: 4 }}>{e.loc}</div>
+                )}
               </div>
-              <div style={{ color: 'var(--text-dim)', fontSize: 14 }}>{e.loc}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <span
-                  style={{
-                    fontSize: 10,
-                    letterSpacing: '0.24em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-mute)',
-                    padding: '6px 10px',
-                    border: '1px solid var(--line)',
-                  } as React.CSSProperties}
-                >
-                  {e.tag}
-                </span>
-                <span style={{ color: tweaks.accent, fontSize: 20 }}>→</span>
-              </div>
+              {!isMobile && (
+                <>
+                  <div style={{ color: 'var(--text-dim)', fontSize: 14 }}>{e.loc}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        letterSpacing: '0.24em',
+                        textTransform: 'uppercase',
+                        color: 'var(--text-mute)',
+                        padding: '6px 10px',
+                        border: '1px solid var(--line)',
+                      } as React.CSSProperties}
+                    >
+                      {e.tag}
+                    </span>
+                    <span style={{ color: tweaks.accent, fontSize: 20 }}>→</span>
+                  </div>
+                </>
+              )}
+              {isMobile && (
+                <span style={{ color: tweaks.accent, fontSize: 18, alignSelf: 'center', justifySelf: 'end' }}>→</span>
+              )}
             </a>
           ))}
         </div>

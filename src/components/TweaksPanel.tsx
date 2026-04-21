@@ -76,7 +76,7 @@ export function TweaksPanel({
         bottom: 24,
         right: 24,
         zIndex: 100,
-        width: 320,
+        width: 'min(320px, calc(100vw - 32px)',
         maxHeight: 'calc(100vh - 48px)',
         overflowY: 'auto',
         background: 'rgba(11,27,46,0.96)',

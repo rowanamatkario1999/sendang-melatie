@@ -1,8 +1,10 @@
 import React from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { BatikPattern, LogoMark, SectionLabel, sectionStyle, container, paragraphStyle, h2Style } from './ui';
 
 export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <section
       id="logo"
@@ -14,8 +16,8 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 80,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? 40 : 80,
             alignItems: 'center',
             marginTop: 48,
           }}
@@ -24,17 +26,17 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
             style={{
               display: 'grid',
               placeItems: 'center',
-              padding: 48,
+              padding: isMobile ? 32 : 48,
               background: 'var(--surface-2)',
               border: '1px solid var(--line)',
               position: 'relative',
               overflow: 'hidden',
-              minHeight: 480,
+              minHeight: isMobile ? 260 : 480,
             } as React.CSSProperties}
           >
             <BatikPattern color={tweaks.accent} opacity={0.14} motif="truntum" secondary="#A83232" />
             <div style={{ position: 'relative' }}>
-              <LogoMark size={360} accent={tweaks.accent} variant="full" />
+              <LogoMark size={isMobile ? 220 : 360} accent={tweaks.accent} variant="full" />
             </div>
           </div>
           <div>
@@ -58,7 +60,7 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
                 borderLeft: `2px solid ${tweaks.accent}`,
                 fontFamily: `'${tweaks.titleFont}', serif`,
                 fontStyle: 'italic',
-                fontSize: 20,
+                fontSize: isMobile ? 17 : 20,
                 lineHeight: 1.5,
                 color: 'var(--text)',
               }}
@@ -83,8 +85,8 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
                   key={k}
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '160px 1fr',
-                    gap: 24,
+                    gridTemplateColumns: isMobile ? '100px 1fr' : '160px 1fr',
+                    gap: 16,
                     paddingBottom: 14,
                     borderBottom: '1px solid var(--line)',
                   }}

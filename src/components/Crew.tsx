@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Tweaks } from '../types';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import { BatikPattern, JasmineSprinkle, Placeholder, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
 const CREW_MEMBERS = [
@@ -13,6 +14,7 @@ const CREW_SPRINKLES = [
 ];
 
 export function Crew({ tweaks }: { tweaks: Tweaks }) {
+  const { isMobile } = useBreakpoint();
   return (
     <section id="crew" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.045} motif="ceplok" secondary="#2E4A6B" />
@@ -22,8 +24,8 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            gap: 80,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr',
+            gap: isMobile ? 16 : 80,
             marginTop: 48,
             alignItems: 'end',
           }}
@@ -37,8 +39,8 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
           style={{
             marginTop: 64,
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 24,
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+            gap: isMobile ? 16 : 24,
           }}
         >
           {CREW_MEMBERS.map((p, i) => (
@@ -48,7 +50,7 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
                 <div
                   style={{
                     fontFamily: `'${tweaks.titleFont}', serif`,
-                    fontSize: 22,
+                    fontSize: isMobile ? 18 : 22,
                     color: 'var(--text)',
                   }}
                 >

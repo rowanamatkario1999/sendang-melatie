@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Tweaks } from '../types';
 import { NAV_ITEMS } from '../constants';
 import { LogoMark } from './ui';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 
 const listStyle: React.CSSProperties = {
   display: 'flex',
@@ -12,11 +13,12 @@ const listStyle: React.CSSProperties = {
   alignItems: 'center',
 };
 
-function NavLink({ label, href }: { label: string; href: string }) {
+function NavLink({ label, href, onClick }: { label: string; href: string; onClick?: () => void }) {
   return (
     <li>
       <a
         href={href}
+        onClick={onClick}
         style={{
           fontSize: 12,
           letterSpacing: '0.22em',
@@ -35,9 +37,100 @@ function NavLink({ label, href }: { label: string; href: string }) {
   );
 }
 
+function HamburgerIcon({ open }: { open: boolean }) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      {open ? (
+        <>
+          <line x1="4" y1="4" x2="20" y2="20" />
+          <line x1="20" y1="4" x2="4" y2="20" />
+        </>
+      ) : (
+        <>
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean }) {
+  const { isMobile } = useBreakpoint();
+  const [menuOpen, setMenuOpen] = useState(false);
   const isCenter = tweaks.navLayout === 'center';
   const bigSize = Math.max(tweaks.logoSize * 2.4, 180);
+  const hPad = 'clamp(16px, 4vw, 40px)';
+
+  if (isMobile) {
+    return (
+      <>
+        <nav
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            padding: `${scrolled ? '14px' : '18px'} ${hPad}`,
+            background: scrolled || menuOpen ? 'rgba(23,64,61,0.96)' : 'rgba(23,64,61,0.35)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            borderBottom: scrolled || menuOpen ? '1px solid var(--line)' : '1px solid transparent',
+            transition: 'all 280ms ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          } as React.CSSProperties}
+        >
+          <a href="#top" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <LogoMark size={32} accent={tweaks.accent} />
+            <span
+              style={{
+                fontFamily: `'${tweaks.titleFont}', serif`,
+                fontSize: 16,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: 'var(--text)',
+              } as React.CSSProperties}
+            >
+              Sendang Melatie
+            </span>
+          </a>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Sluit menu' : 'Open menu'}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text)', lineHeight: 0 }}
+          >
+            <HamburgerIcon open={menuOpen} />
+          </button>
+        </nav>
+
+        {menuOpen && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 49,
+              background: 'rgba(23,64,61,0.97)',
+              backdropFilter: 'blur(14px)',
+              WebkitBackdropFilter: 'blur(14px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            } as React.CSSProperties}
+          >
+            <ul style={{ ...listStyle, flexDirection: 'column', gap: 36, textAlign: 'center' }}>
+              {NAV_ITEMS.map((i) => (
+                <NavLink key={i.label} {...i} onClick={() => setMenuOpen(false)} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    );
+  }
 
   return (
     <nav
@@ -47,7 +140,7 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
         left: 0,
         right: 0,
         zIndex: 50,
-        padding: scrolled ? '14px 40px' : '24px 40px',
+        padding: scrolled ? `14px ${hPad}` : `24px ${hPad}`,
         background: scrolled ? 'rgba(23,64,61,0.92)' : 'rgba(23,64,61,0.35)',
         backdropFilter: 'blur(14px)',
         WebkitBackdropFilter: 'blur(14px)',
