@@ -303,26 +303,29 @@ export function Rule({ accent, width = 48 }: { accent: string; width?: number })
   return <div style={{ width, height: 1, background: accent, opacity: 0.7 }} />;
 }
 
+const ctaBase: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 10,
+  padding: '16px 32px',
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: '0.24em',
+  textTransform: 'uppercase',
+  cursor: 'pointer',
+  transition: 'all 200ms',
+  textDecoration: 'none',
+};
+
 // ─── CTA ──────────────────────────────────────────────────────
 export function CTA({ children, primary, accent }: { children: React.ReactNode; primary?: boolean; accent: string }) {
-  const base: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 10,
-    padding: '16px 32px',
-    fontSize: 11,
-    fontWeight: 600,
-    letterSpacing: '0.24em',
-    textTransform: 'uppercase',
-    border: `1px solid ${accent}`,
-    cursor: 'pointer',
-    transition: 'all 200ms',
-    textDecoration: 'none',
-  };
   return (
     <a
       href="#over"
-      style={primary ? { ...base, background: accent, color: '#0B1B2E' } : { ...base, background: 'transparent', color: 'var(--text)' }}
+      style={primary
+        ? { ...ctaBase, border: `1px solid ${accent}`, background: accent, color: '#0B1B2E' }
+        : { ...ctaBase, border: `1px solid ${accent}`, background: 'transparent', color: 'var(--text)' }
+      }
     >
       {children}
       <span style={{ fontSize: 14 }}>→</span>

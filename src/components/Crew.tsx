@@ -2,21 +2,21 @@ import React from 'react';
 import type { Tweaks } from '../types';
 import { BatikPattern, JasmineSprinkle, Placeholder, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
-export function Crew({ tweaks }: { tweaks: Tweaks }) {
-  const crew = [
-    'Rowan', 'Cherrolaine', 'Fano', 'Macy', 'Ferrino',
-    'Donovan', 'Orlando', 'Marta', 'Bruce', 'Jermaine', 'Renell', 'Mitchell',
-  ].map((name, i) => ({ name, role: `Speler ${i + 1}` }));
+const CREW_MEMBERS = [
+  'Rowan', 'Cherrolaine', 'Fano', 'Macy', 'Ferrino',
+  'Donovan', 'Orlando', 'Marta', 'Bruce', 'Jermaine', 'Renell', 'Mitchell',
+].map((name, i) => ({ name, role: `Speler ${i + 1}` }));
 
+const CREW_SPRINKLES = [
+  { top: '8%', left: '3%', size: 44, rotate: 36, opacity: 0.5 },
+  { top: '55%', right: '2%', size: 58, rotate: -12, opacity: 0.55 },
+];
+
+export function Crew({ tweaks }: { tweaks: Tweaks }) {
   return (
     <section id="crew" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.045} motif="ceplok" secondary="#2E4A6B" />
-      <JasmineSprinkle
-        items={[
-          { top: '8%', left: '3%', size: 44, rotate: 36, opacity: 0.5 },
-          { top: '55%', right: '2%', size: 58, rotate: -12, opacity: 0.55 },
-        ]}
-      />
+      <JasmineSprinkle items={CREW_SPRINKLES} />
       <div style={{ ...container, position: 'relative' }}>
         <SectionLabel num="03" label="The crew" accent={tweaks.accent} />
         <div
@@ -41,7 +41,7 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
             gap: 24,
           }}
         >
-          {crew.map((p, i) => (
+          {CREW_MEMBERS.map((p, i) => (
             <div key={p.name} style={{ position: 'relative' }}>
               <Placeholder label={`PORTRET ${String(i + 1).padStart(2, '0')}`} ratio="3/4" />
               <div style={{ paddingTop: 16 }}>

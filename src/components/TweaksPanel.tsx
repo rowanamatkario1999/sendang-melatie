@@ -2,6 +2,12 @@ import React from 'react';
 import type { Tweaks } from '../types';
 import { FONT_OPTIONS, ACCENT_SWATCHES } from '../constants';
 
+const VARIANT_LABELS: Record<Tweaks['variant'], string> = {
+  classic: 'Klassiek',
+  asymmetric: 'Asym',
+  editorial: 'Editorial',
+};
+
 function TwkBlock({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: 18 }}>
@@ -97,7 +103,7 @@ export function TweaksPanel({
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
           {(['classic', 'asymmetric', 'editorial'] as const).map((k) => (
             <button key={k} onClick={() => set('variant', k)} style={tglBtn(tweaks.variant === k, tweaks.accent)}>
-              {k === 'classic' ? 'Klassiek' : k === 'asymmetric' ? 'Asym' : 'Editorial'}
+              {VARIANT_LABELS[k]}
             </button>
           ))}
         </div>

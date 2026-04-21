@@ -2,26 +2,26 @@ import React from 'react';
 import type { Tweaks } from '../types';
 import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, paragraphStyle, h2Style } from './ui';
 
-export function Events({ tweaks }: { tweaks: Tweaks }) {
-  const events = [
-    { date: '17 MEI', title: 'Gamelan-avond', loc: 'Cultureel Centrum Den Haag', tag: 'Muziek' },
-    { date: '22 JUN', title: 'Pasar Malam Sendang', loc: 'Zuiderpark, Rotterdam', tag: 'Festival' },
-    { date: '14 SEP', title: 'Wayang Kulit voorstelling', loc: 'Theater De Vaillant', tag: 'Theater' },
-    { date: '19 OKT', title: 'Basa Jawa workshop', loc: 'Stichtingshuis, Utrecht', tag: 'Taal' },
-  ];
+const EVENTS_DATA = [
+  { date: '17 MEI', title: 'Gamelan-avond', loc: 'Cultureel Centrum Den Haag', tag: 'Muziek' },
+  { date: '22 JUN', title: 'Pasar Malam Sendang', loc: 'Zuiderpark, Rotterdam', tag: 'Festival' },
+  { date: '14 SEP', title: 'Wayang Kulit voorstelling', loc: 'Theater De Vaillant', tag: 'Theater' },
+  { date: '19 OKT', title: 'Basa Jawa workshop', loc: 'Stichtingshuis, Utrecht', tag: 'Taal' },
+];
 
+const EVENTS_SPRINKLES = [
+  { top: '20%', right: '8%', size: 40, rotate: -30, opacity: 0.45 },
+  { bottom: '10%', left: '12%', size: 48, rotate: 55, opacity: 0.5 },
+];
+
+export function Events({ tweaks }: { tweaks: Tweaks }) {
   return (
     <section
       id="events"
       style={{ ...sectionStyle, background: 'var(--surface)', position: 'relative', overflow: 'hidden' }}
     >
       <BatikPattern color={tweaks.accent} opacity={0.065} motif="kawung" secondary="#8B4513" />
-      <JasmineSprinkle
-        items={[
-          { top: '20%', right: '8%', size: 40, rotate: -30, opacity: 0.45 },
-          { bottom: '10%', left: '12%', size: 48, rotate: 55, opacity: 0.5 },
-        ]}
-      />
+      <JasmineSprinkle items={EVENTS_SPRINKLES} />
       <div style={{ ...container, position: 'relative' }}>
         <SectionLabel num="04" label="Evenementen" accent={tweaks.accent} />
         <div
@@ -41,7 +41,7 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
           </p>
         </div>
         <div style={{ marginTop: 64, borderTop: '1px solid var(--line)' }}>
-          {events.map((e) => (
+          {EVENTS_DATA.map((e) => (
             <a
               key={e.title}
               href="#contact"

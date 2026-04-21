@@ -9,6 +9,13 @@ import {
   ScrollCue,
 } from './ui';
 
+const HERO_SPRINKLES = [
+  { top: '14%', left: '8%', size: 64, rotate: 18, opacity: 0.45 },
+  { top: '62%', right: '12%', size: 46, rotate: -28, opacity: 0.4 },
+  { bottom: '20%', left: '22%', size: 38, rotate: 52, opacity: 0.35 },
+  { top: '30%', right: '30%', size: 30, rotate: 70, opacity: 0.3 },
+];
+
 function HeroBackdrop({ overlay, accent }: { overlay: number; accent: string }) {
   return (
     <>
@@ -26,14 +33,7 @@ function HeroBackdrop({ overlay, accent }: { overlay: number; accent: string }) 
         } as React.CSSProperties}
       />
       <BatikPattern color={accent} opacity={0.09} motif="kawung" secondary="#A83232" />
-      <JasmineSprinkle
-        items={[
-          { top: '14%', left: '8%', size: 64, rotate: 18, opacity: 0.45 },
-          { top: '62%', right: '12%', size: 46, rotate: -28, opacity: 0.4 },
-          { bottom: '20%', left: '22%', size: 38, rotate: 52, opacity: 0.35 },
-          { top: '30%', right: '30%', size: 30, rotate: 70, opacity: 0.3 },
-        ]}
-      />
+      <JasmineSprinkle items={HERO_SPRINKLES} />
     </>
   );
 }
