@@ -1,14 +1,14 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
-import { BatikPattern, JasmineSprinkle, Placeholder, SectionLabel, sectionStyle, container, h2Style } from './ui';
+import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
 const TILES = [
-  { label: "PASAR MALAM '25", ratio: '4/5', span: 1 },
-  { label: 'GAMELAN REPETITIE', ratio: '1/1', span: 1 },
-  { label: 'WAYANG KULIT', ratio: '3/4', span: 1 },
-  { label: 'DANSGROEP', ratio: '16/11', span: 2 },
-  { label: 'WORKSHOP BASA JAWA', ratio: '4/5', span: 1 },
+  { label: "PASAR MALAM '25", ratio: '4/5', span: 1, src: '/assets/image00010.jpeg' },
+  { label: 'GAMELAN REPETITIE', ratio: '1/1', span: 1, src: '/assets/image00024.jpeg' },
+  { label: 'WAYANG KULIT', ratio: '3/4', span: 1, src: '/assets/image00009.jpeg' },
+  { label: 'DANSGROEP', ratio: '16/11', span: 2, src: '/assets/image00004.jpeg' },
+  { label: 'WORKSHOP BASA JAWA', ratio: '4/5', span: 1, src: '/assets/image00019.jpeg' },
 ];
 
 export function Media({ tweaks }: { tweaks: Tweaks }) {
@@ -61,7 +61,29 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
         >
           {TILES.map((t, i) => (
             <div key={i} style={{ gridColumn: !isMobile && t.span === 2 ? 'span 2' : 'span 1' }}>
-              <Placeholder label={t.label} ratio={t.ratio} />
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: t.ratio,
+                  overflow: 'hidden',
+                  border: '1px solid rgba(246,237,217,0.10)',
+                }}
+              >
+                <img
+                  src={t.src}
+                  alt={t.label}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block',
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>

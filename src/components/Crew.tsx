@@ -1,12 +1,12 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
-import { BatikPattern, JasmineSprinkle, Placeholder, SectionLabel, sectionStyle, container, h2Style } from './ui';
+import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
 const CREW_MEMBERS = [
-  'Rowan', 'Cherrolaine', 'Fano', 'Macy', 'Ferrino',
-  'Donovan', 'Orlando', 'Marta', 'Bruce', 'Jermaine', 'Renell', 'Mitchell',
-].map((name, i) => ({ name, role: `Speler ${i + 1}` }));
+  'Rowan | Peking', 'Cherrolaine | Demung', 'Stefano | Ketuk-Kenong / Backstage', 'Macy | Saron', 'Ferrino | Kendhang',
+  'Donovan | Bonang Penerus', 'Orlando | Kendhang', 'Martha | Kethuk-Kenong', 'Bruce | Gong', 'Jermaine | Bonang Barung', 'Renell | Saron Wilahan Sanga', 'Mitchell | Saron/ Cameraman',
+].map((entry) => { const [name, role] = entry.split(' | '); return { name, role }; });
 
 const CREW_SPRINKLES = [
   { top: '8%', left: '3%', size: 44, rotate: 36, opacity: 0.5 },
@@ -43,9 +43,13 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
             gap: isMobile ? 16 : 24,
           }}
         >
-          {CREW_MEMBERS.map((p, i) => (
+          {CREW_MEMBERS.map((p) => (
             <div key={p.name} style={{ position: 'relative' }}>
-              <Placeholder label={`PORTRET ${String(i + 1).padStart(2, '0')}`} ratio="3/4" />
+              <img
+                src="/assets/coming soon sendang melatie.png"
+                alt={p.name}
+                style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block' }}
+              />
               <div style={{ paddingTop: 16 }}>
                 <div
                   style={{
