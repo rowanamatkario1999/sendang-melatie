@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
 import {
@@ -13,10 +14,16 @@ import {
   h2Style,
 } from './ui';
 
+const EMAILJS_SERVICE  = 'service_274a2po';
+const EMAILJS_TEMPLATE = 'template_tihz5qh';
+const EMAILJS_KEY      = 'iicpjfjtkg7BqiCJD';
+
 export function Contact({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
   const [form, setForm] = useState({ name: '', email: '', msg: '' });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const socials = [
     { icon: 'tiktok', label: '@sendangmelatie', platform: 'TikTok', href: 'https://tiktok.com/@sendangmelatie' },
@@ -128,9 +135,24 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
             </div>
           </div>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSent(true);
+              setSending(true);
+              setError(null);
+              try {
+                await emailjs.send(
+                  EMAILJS_SERVICE,
+                  EMAILJS_TEMPLATE,
+                  { from_name: form.name, from_email: form.email, message: form.msg },
+                  EMAILJS_KEY,
+                );
+                setSent(true);
+                setForm({ name: '', email: '', msg: '' });
+              } catch {
+                setError('Er ging iets mis. Probeer het opnieuw of mail ons direct.');
+              } finally {
+                setSending(false);
+              }
             }}
             style={{ display: 'flex', flexDirection: 'column', gap: 24 }}
           >
@@ -154,9 +176,12 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
               onChange={(v) => setForm({ ...form, msg: v })}
               accent={tweaks.accent}
             />
+            {error && (
+              <p style={{ color: '#c0392b', fontSize: 13, margin: 0 }}>{error}</p>
+            )}
             <button
               type="submit"
-              disabled={sent}
+              disabled={sent || sending}
               style={{
                 marginTop: 8,
                 padding: '18px 28px',
@@ -167,11 +192,12 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
                 fontWeight: 600,
                 letterSpacing: '0.24em',
                 textTransform: 'uppercase',
-                cursor: sent ? 'default' : 'pointer',
+                cursor: sent || sending ? 'default' : 'pointer',
                 transition: 'all 200ms',
+                opacity: sending ? 0.6 : 1,
               } as React.CSSProperties}
             >
-              {sent ? '✓ Verzonden – terima kasih' : 'Verstuur bericht →'}
+              {sent ? '✓ Verzonden – terima kasih' : sending ? 'Bezig met versturen…' : 'Verstuur bericht →'}
             </button>
           </form>
         </div>
