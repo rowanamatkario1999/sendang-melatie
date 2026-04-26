@@ -68,6 +68,34 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
           © 2026 · Stichting Sendang Melatie
         </div>
       </div>
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: '32px auto 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12,
+          borderTop: '1px solid var(--line)',
+          paddingTop: 24,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 10,
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            color: 'var(--text-mute)',
+          } as React.CSSProperties}
+        >
+          Sponsored by
+        </span>
+        <img
+          src="/assets/logo-sushi-by-sugi-light-v2.png"
+          alt="Sushi by Sugi"
+          style={{ height: 48, objectFit: 'contain' }}
+        />
+      </div>
     </footer>
   );
 }
