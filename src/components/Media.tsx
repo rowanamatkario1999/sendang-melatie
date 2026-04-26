@@ -1,6 +1,8 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
 const TILES = [
@@ -13,6 +15,8 @@ const TILES = [
 
 export function Media({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].media;
   return (
     <section id="media" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.05} motif="parang" secondary="#A83232" />
@@ -23,7 +27,7 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
         ]}
       />
       <div style={{ ...container, position: 'relative' }}>
-        <SectionLabel num="05" label="Foto's & Video's" accent={tweaks.accent} />
+        <SectionLabel num="05" label={t.sectionLabel} accent={tweaks.accent} />
         <div
           style={{
             display: 'grid',
@@ -34,7 +38,9 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
           }}
         >
           <h2 style={h2Style(tweaks.titleFont)}>
-            Momenten uit onze <em style={{ color: tweaks.accent }}>archief</em>.
+            {t.h2}
+            <em style={{ color: tweaks.accent }}>{t.h2Accent}</em>
+            {t.h2End}
           </h2>
           <a
             href="#"
@@ -48,7 +54,7 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
               paddingBottom: 4,
             } as React.CSSProperties}
           >
-            Zie volledige galerij →
+            {t.gallery}
           </a>
         </div>
         <div
@@ -59,20 +65,20 @@ export function Media({ tweaks }: { tweaks: Tweaks }) {
             gap: 16,
           }}
         >
-          {TILES.map((t, i) => (
-            <div key={i} style={{ gridColumn: !isMobile && t.span === 2 ? 'span 2' : 'span 1' }}>
+          {TILES.map((tile, i) => (
+            <div key={i} style={{ gridColumn: !isMobile && tile.span === 2 ? 'span 2' : 'span 1' }}>
               <div
                 style={{
                   position: 'relative',
                   width: '100%',
-                  aspectRatio: t.ratio,
+                  aspectRatio: tile.ratio,
                   overflow: 'hidden',
                   border: '1px solid rgba(246,237,217,0.10)',
                 }}
               >
                 <img
-                  src={t.src}
-                  alt={t.label}
+                  src={tile.src}
+                  alt={tile.label}
                   style={{
                     position: 'absolute',
                     inset: 0,

@@ -1,6 +1,8 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import {
   BatikPattern,
   JasmineSprinkle,
@@ -40,6 +42,8 @@ function HeroBackdrop({ overlay, accent }: { overlay: number; accent: string }) 
 }
 
 function HeroClassic({ tweaks }: { tweaks: Tweaks }) {
+  const { lang } = useLang();
+  const t = translations[lang].hero;
   const words = tweaks.headline.split(' ');
   return (
     <section
@@ -58,7 +62,7 @@ function HeroClassic({ tweaks }: { tweaks: Tweaks }) {
               color: tweaks.accent,
             } as React.CSSProperties}
           >
-            {tweaks.eyebrow}
+            {t.eyebrow}
           </span>
           <Rule accent={tweaks.accent} />
         </div>
@@ -107,13 +111,13 @@ function HeroClassic({ tweaks }: { tweaks: Tweaks }) {
             fontStyle: 'italic',
           }}
         >
-          {tweaks.subheadline}
+          {t.subheadline}
         </p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
           <CTA primary accent={tweaks.accent}>
-            Ontdek onze verhaal
+            {t.cta1}
           </CTA>
-          <CTA accent={tweaks.accent}>Kom naar een event</CTA>
+          <CTA accent={tweaks.accent}>{t.cta2}</CTA>
         </div>
       </div>
       <ScrollCue accent={tweaks.accent} />
@@ -123,6 +127,8 @@ function HeroClassic({ tweaks }: { tweaks: Tweaks }) {
 
 function HeroAsymmetric({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].hero;
   const words = tweaks.headline.split(' ');
   return (
     <section id="top" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
@@ -149,7 +155,7 @@ function HeroAsymmetric({ tweaks }: { tweaks: Tweaks }) {
               marginBottom: 24,
             } as React.CSSProperties}
           >
-            01 — {tweaks.eyebrow}
+            01 — {t.eyebrow}
           </div>
           <div
             style={{
@@ -202,10 +208,10 @@ function HeroAsymmetric({ tweaks }: { tweaks: Tweaks }) {
                 fontStyle: 'italic',
               }}
             >
-              {tweaks.subheadline}
+              {t.subheadline}
             </p>
           )}
-          {isMobile && <CTA primary accent={tweaks.accent}>Maak kennis met ons</CTA>}
+          {isMobile && <CTA primary accent={tweaks.accent}>{t.cta3}</CTA>}
         </div>
         {!isMobile && (
           <div style={{ paddingBottom: 20 }}>
@@ -221,10 +227,10 @@ function HeroAsymmetric({ tweaks }: { tweaks: Tweaks }) {
                 fontStyle: 'italic',
               }}
             >
-              {tweaks.subheadline}
+              {t.subheadline}
             </p>
             <CTA primary accent={tweaks.accent}>
-              Maak kennis met ons
+              {t.cta3}
             </CTA>
           </div>
         )}
@@ -235,6 +241,8 @@ function HeroAsymmetric({ tweaks }: { tweaks: Tweaks }) {
 
 function HeroEditorial({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].hero;
   const words = tweaks.headline.split(' ');
   return (
     <section
@@ -269,7 +277,7 @@ function HeroEditorial({ tweaks }: { tweaks: Tweaks }) {
               marginBottom: 32,
             } as React.CSSProperties}
           >
-            {tweaks.eyebrow}
+            {t.eyebrow}
           </div>
           <div
             style={{
@@ -317,7 +325,7 @@ function HeroEditorial({ tweaks }: { tweaks: Tweaks }) {
               fontStyle: 'italic',
             }}
           >
-            {tweaks.subheadline}
+            {t.subheadline}
           </p>
           <div style={{ display: 'flex', gap: isMobile ? 24 : 40, fontSize: 13, color: 'var(--text-mute)', flexWrap: 'wrap' }}>
             <div>
@@ -325,7 +333,7 @@ function HeroEditorial({ tweaks }: { tweaks: Tweaks }) {
                 38
               </div>
               <div style={{ letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: 10 } as React.CSSProperties}>
-                Jaar gemeenschap
+                {t.statLabel1}
               </div>
             </div>
             <div>
@@ -333,7 +341,7 @@ function HeroEditorial({ tweaks }: { tweaks: Tweaks }) {
                 24
               </div>
               <div style={{ letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: 10 } as React.CSSProperties}>
-                Evenementen / jaar
+                {t.statLabel2}
               </div>
             </div>
           </div>

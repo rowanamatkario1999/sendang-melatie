@@ -1,6 +1,8 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import { BatikPattern, JasmineSprinkle, SectionLabel, sectionStyle, container, h2Style } from './ui';
 
 const CREW_MEMBERS = [
@@ -15,12 +17,14 @@ const CREW_SPRINKLES = [
 
 export function Crew({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].crew;
   return (
     <section id="crew" style={{ ...sectionStyle, position: 'relative', overflow: 'hidden' }}>
       <BatikPattern color={tweaks.accent} opacity={0.045} motif="ceplok" secondary="#2E4A6B" />
       <JasmineSprinkle items={CREW_SPRINKLES} />
       <div style={{ ...container, position: 'relative' }}>
-        <SectionLabel num="03" label="The crew" accent={tweaks.accent} />
+        <SectionLabel num="03" label={t.sectionLabel} accent={tweaks.accent} />
         <div
           style={{
             display: 'grid',
@@ -31,7 +35,9 @@ export function Crew({ tweaks }: { tweaks: Tweaks }) {
           }}
         >
           <h2 style={h2Style(tweaks.titleFont)}>
-            Mensen die de <em style={{ color: tweaks.accent }}>stichting</em> dragen.
+            {t.h2}
+            <em style={{ color: tweaks.accent }}>{t.h2Accent}</em>
+            {t.h2End}
           </h2>
           <div />
         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { TWEAK_DEFAULTS } from './constants';
 import type { Tweaks } from './types';
+import { LangProvider } from './context/LanguageContext';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { Over } from './components/Over';
@@ -36,6 +37,7 @@ function App() {
   }, []);
 
   return (
+    <LangProvider>
     <div style={{ '--accent': tweaks.accent } as React.CSSProperties}>
       <Nav tweaks={tweaks} scrolled={scrolled} />
       <Hero tweaks={tweaks} />
@@ -48,6 +50,7 @@ function App() {
       <Footer tweaks={tweaks} />
       <TweaksPanel visible={editMode} tweaks={tweaks} setTweaks={setTweaks} />
     </div>
+    </LangProvider>
   );
 }
 

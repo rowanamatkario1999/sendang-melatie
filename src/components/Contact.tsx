@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import {
   BatikPattern,
   JasmineSprinkle,
@@ -20,6 +22,8 @@ const EMAILJS_KEY      = 'iicpjfjtkg7BqiCJD';
 
 export function Contact({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].contact;
   const [form, setForm] = useState({ name: '', email: '', msg: '' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -46,7 +50,7 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
       <BatikPattern color={tweaks.accent} opacity={0.07} motif="truntum" secondary="#2E4A6B" />
       <JasmineSprinkle items={[{ top: '18%', right: '10%', size: 50, rotate: 22, opacity: 0.5 }]} />
       <div style={{ ...container, position: 'relative' }}>
-        <SectionLabel num="06" label="Contact" accent={tweaks.accent} />
+        <SectionLabel num="06" label={t.sectionLabel} accent={tweaks.accent} />
         <div
           style={{
             display: 'grid',
@@ -57,10 +61,11 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
         >
           <div>
             <h2 style={h2Style(tweaks.titleFont)}>
-              Zin om aan te <em style={{ color: tweaks.accent }}>sluiten?</em>
+              {t.h2}
+              <em style={{ color: tweaks.accent }}>{t.h2Accent}</em>
             </h2>
             <p style={{ ...paragraphStyle, marginTop: 28 }}>
-              Stuur ons een bericht of contact ons via social media.
+              {t.intro}
             </p>
             <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 18 }}>
               {[
@@ -92,7 +97,7 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
                   marginBottom: 18,
                 } as React.CSSProperties}
               >
-                Volg ons
+                {t.followLabel}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {socials.map((s) => (
@@ -149,7 +154,7 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
                 setSent(true);
                 setForm({ name: '', email: '', msg: '' });
               } catch {
-                setError('Er ging iets mis. Probeer het opnieuw of mail ons direct.');
+                setError(t.errorMsg);
               } finally {
                 setSending(false);
               }
@@ -157,20 +162,20 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
             style={{ display: 'flex', flexDirection: 'column', gap: 24 }}
           >
             <Field
-              label="Naam"
+              label={t.fieldName}
               value={form.name}
               onChange={(v) => setForm({ ...form, name: v })}
               accent={tweaks.accent}
             />
             <Field
-              label="E-mail"
+              label={t.fieldEmail}
               type="email"
               value={form.email}
               onChange={(v) => setForm({ ...form, email: v })}
               accent={tweaks.accent}
             />
             <Field
-              label="Bericht"
+              label={t.fieldMsg}
               textarea
               value={form.msg}
               onChange={(v) => setForm({ ...form, msg: v })}
@@ -197,7 +202,7 @@ export function Contact({ tweaks }: { tweaks: Tweaks }) {
                 opacity: sending ? 0.6 : 1,
               } as React.CSSProperties}
             >
-              {sent ? '✓ Verzonden – terima kasih' : sending ? 'Bezig met versturen…' : 'Verstuur bericht →'}
+              {sent ? t.btnSent : sending ? t.btnSending : t.btnSend}
             </button>
           </form>
         </div>

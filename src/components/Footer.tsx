@@ -1,11 +1,14 @@
 import React from 'react';
 import type { Tweaks } from '../types';
-import { NAV_ITEMS } from '../constants';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import { LogoMark, BatikDivider } from './ui';
 
 export function Footer({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang];
   return (
     <footer
       style={{
@@ -42,9 +45,9 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
           </span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? 16 : 28, flexWrap: 'wrap' }}>
-          {NAV_ITEMS.map((i) => (
+          {t.nav.map((i: { label: string; href: string }) => (
             <a
-              key={i.label}
+              key={i.href}
               href={i.href}
               style={{
                 fontSize: 11,
@@ -65,7 +68,7 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
             color: 'var(--text-mute)',
           } as React.CSSProperties}
         >
-          © 2026 · Stichting Sendang Melatie
+          {t.footer.copyright}
         </div>
       </div>
       <div
@@ -88,7 +91,7 @@ export function Footer({ tweaks }: { tweaks: Tweaks }) {
             color: 'var(--text-mute)',
           } as React.CSSProperties}
         >
-          Sponsored by
+          {t.footer.sponsoredBy}
         </span>
         <img
           src="/assets/logo-sushi-by-sugi-light-v2.png"

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import type { Tweaks } from '../types';
-import { NAV_ITEMS } from '../constants';
 import { LogoMark } from './ui';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang, type Lang } from '../context/LanguageContext';
+import { translations } from '../translations';
 
 const listStyle: React.CSSProperties = {
   display: 'flex',
@@ -37,6 +38,45 @@ function NavLink({ label, href, onClick }: { label: string; href: string; onClic
   );
 }
 
+const FLAGS: { lang: Lang; flag: string; title: string }[] = [
+  { lang: 'nl', flag: '🇳🇱', title: 'Nederlands' },
+  { lang: 'en', flag: '🇬🇧', title: 'English' },
+  { lang: 'jv', flag: '🇮🇩', title: 'Basa Jawa' },
+];
+
+function LangToggle(_: { accent: string }) {
+  const { lang, setLang } = useLang();
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      {FLAGS.map(({ lang: l, flag, title }, i) => (
+        <React.Fragment key={l}>
+          {i > 0 && (
+            <span style={{ color: 'var(--text-mute)', fontSize: 10, userSelect: 'none' }}>|</span>
+          )}
+          <button
+            onClick={() => setLang(l)}
+            title={title}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: '2px 4px',
+              cursor: lang === l ? 'default' : 'pointer',
+              fontSize: 20,
+              lineHeight: 1,
+              opacity: lang === l ? 1 : 0.35,
+              transition: 'opacity 200ms',
+            } as React.CSSProperties}
+            onMouseEnter={(e) => { if (lang !== l) e.currentTarget.style.opacity = '0.7'; }}
+            onMouseLeave={(e) => { if (lang !== l) e.currentTarget.style.opacity = '0.35'; }}
+          >
+            {flag}
+          </button>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 function HamburgerIcon({ open }: { open: boolean }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -58,6 +98,8 @@ function HamburgerIcon({ open }: { open: boolean }) {
 
 export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang];
   const [menuOpen, setMenuOpen] = useState(false);
   const isCenter = tweaks.navLayout === 'center';
   const bigSize = Math.max(tweaks.logoSize * 2.4, 180);
@@ -98,13 +140,16 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
               Sendang Melatie
             </span>
           </a>
-          <button
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label={menuOpen ? 'Sluit menu' : 'Open menu'}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text)', lineHeight: 0 }}
-          >
-            <HamburgerIcon open={menuOpen} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <LangToggle accent={tweaks.accent} />
+            <button
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? 'Sluit menu' : 'Open menu'}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text)', lineHeight: 0 }}
+            >
+              <HamburgerIcon open={menuOpen} />
+            </button>
+          </div>
         </nav>
 
         {menuOpen && (
@@ -122,8 +167,8 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
             } as React.CSSProperties}
           >
             <ul style={{ ...listStyle, flexDirection: 'column', gap: 36, textAlign: 'center' }}>
-              {NAV_ITEMS.map((i) => (
-                <NavLink key={i.label} {...i} onClick={() => setMenuOpen(false)} />
+              {t.nav.map((i) => (
+                <NavLink key={i.href} {...i} onClick={() => setMenuOpen(false)} />
               ))}
             </ul>
           </div>
@@ -156,8 +201,8 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
       {isCenter ? (
         <>
           <ul style={listStyle}>
-            {NAV_ITEMS.slice(0, 3).map((i) => (
-              <NavLink key={i.label} {...i} />
+            {t.nav.slice(0, 3).map((i) => (
+              <NavLink key={i.href} {...i} />
             ))}
           </ul>
           <a
@@ -190,9 +235,12 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
             </div>
           </a>
           <ul style={{ ...listStyle, justifyContent: 'flex-end' }}>
-            {NAV_ITEMS.slice(3).map((i) => (
-              <NavLink key={i.label} {...i} />
+            {t.nav.slice(3).map((i) => (
+              <NavLink key={i.href} {...i} />
             ))}
+            <li>
+              <LangToggle accent={tweaks.accent} />
+            </li>
           </ul>
         </>
       ) : (
@@ -212,11 +260,11 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
             </span>
           </a>
           <ul style={{ ...listStyle, justifyContent: 'center' }}>
-            {NAV_ITEMS.map((i) => (
-              <NavLink key={i.label} {...i} />
+            {t.nav.map((i) => (
+              <NavLink key={i.href} {...i} />
             ))}
           </ul>
-          <div />
+          <LangToggle accent={tweaks.accent} />
         </>
       )}
     </nav>

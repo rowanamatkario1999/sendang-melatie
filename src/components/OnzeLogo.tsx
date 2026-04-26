@@ -1,10 +1,14 @@
 import React from 'react';
 import type { Tweaks } from '../types';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useLang } from '../context/LanguageContext';
+import { translations } from '../translations';
 import { BatikPattern, LogoMark, SectionLabel, sectionStyle, container, paragraphStyle, h2Style } from './ui';
 
 export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
+  const { lang } = useLang();
+  const t = translations[lang].logo;
   return (
     <section
       id="logo"
@@ -12,7 +16,7 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
     >
       <BatikPattern color={tweaks.accent} opacity={0.06} motif="parang" secondary="#2E4A6B" />
       <div style={{ ...container, position: 'relative' }}>
-        <SectionLabel num="02" label="Onze logo" accent={tweaks.accent} />
+        <SectionLabel num="02" label={t.sectionLabel} accent={tweaks.accent} />
         <div
           style={{
             display: 'grid',
@@ -41,17 +45,15 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
           </div>
           <div>
             <h2 style={h2Style(tweaks.titleFont)}>
-              De betekenis achter <em style={{ color: tweaks.accent }}>het logo.</em>
+              {t.h2}
             </h2>
             <p style={{ ...paragraphStyle, marginTop: 28 }}>
-              De naam <em style={{ color: tweaks.accent, fontStyle: 'italic' }}>Krawitan Sendang Melatie</em> – 'Bron
-              van Jasmijn' – symboliseert een plek waar talent kan bloeien en waar jonge spelers worden geïnspireerd om
-              hun eigen klank te ontdekken, terwijl zij tegelijk verbonden blijven met de kennis en ervaring van oudere
-              generaties.
+              {t.p1pre}
+              <em style={{ color: tweaks.accent, fontStyle: 'italic' }}>{t.p1em}</em>
+              {t.p1post}
             </p>
             <p style={{ ...paragraphStyle, marginTop: 20 }}>
-              Zo vormt Krawitan Sendang Melatie een levende gemeenschap waarin muziek mensen verbindt en culturele
-              identiteit zichtbaar en hoorbaar blijft, zowel lokaal als internationaal.
+              {t.p2}
             </p>
             <blockquote
               style={{
@@ -65,22 +67,19 @@ export function OnzeLogo({ tweaks }: { tweaks: Tweaks }) {
                 color: 'var(--text)',
               }}
             >
-              "Het laten voortleven van de Surinaams-Javaanse gamelan door jongeren, voor jongeren, en met de
-              gemeenschap."
+              {t.blockquote}
             </blockquote>
             <p style={{ ...paragraphStyle, marginTop: 28 }}>
-              De <strong style={{ color: 'var(--text)', fontWeight: 500 }}>gong</strong> symboliseert het hart van de
-              gamelantraditie. De <strong style={{ color: 'var(--text)', fontWeight: 500 }}>golvende lijnen</strong>{' '}
-              staan voor de voortdurende stroom van kennis tussen generaties en continenten. De{' '}
-              <strong style={{ color: 'var(--text)', fontWeight: 500 }}>jasmijnbloem</strong> verbeeldt de jongeren die
-              als nieuwe bloemen tot bloei komen.
+              {t.symbolsPre1}
+              <strong style={{ color: 'var(--text)', fontWeight: 500 }}>{t.symbolsTerm1}</strong>
+              {t.symbolsMid1}
+              <strong style={{ color: 'var(--text)', fontWeight: 500 }}>{t.symbolsTerm2}</strong>
+              {t.symbolsMid2}
+              <strong style={{ color: 'var(--text)', fontWeight: 500 }}>{t.symbolsTerm3}</strong>
+              {t.symbolsEnd}
             </p>
             <ul style={{ marginTop: 32, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {[
-                ['Gong', 'Het hart van de gamelantraditie'],
-                ['Golvende lijnen', 'Stroom van kennis tussen generaties en continenten'],
-                ['Jasmijnbloem', 'Jongeren die als nieuwe bloemen tot bloei komen'],
-              ].map(([k, v]) => (
+              {t.listItems.map(([k, v]) => (
                 <li
                   key={k}
                   style={{
