@@ -10,6 +10,11 @@ const EVENTS_SPRINKLES = [
   { bottom: '10%', left: '12%', size: 48, rotate: 55, opacity: 0.5 },
 ];
 
+const CATEGORY_STYLES: Record<string, { bg: string; fg: string }> = {
+  theater: { bg: '#8B4513', fg: '#F6EDD9' },
+  herdenking: { bg: '#C94B3F', fg: '#F6EDD9' },
+};
+
 export function Events({ tweaks }: { tweaks: Tweaks }) {
   const { isMobile } = useBreakpoint();
   const { lang } = useLang();
@@ -44,8 +49,11 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
         <div style={{ marginTop: 64, borderTop: '1px solid var(--line)' }}>
           {t.items.map((e) => {
             const flyer = 'flyer' in e ? e.flyer : undefined;
-            const href = flyer ? flyer : ('href' in e && e.href ? e.href : '#contact');
+            const ticketHref = 'href' in e && e.href ? e.href : undefined;
+            const href = flyer ? flyer : (ticketHref ? ticketHref : '#contact');
             const external = href.startsWith('http') || Boolean(flyer);
+            const categoryStyle = CATEGORY_STYLES[e.category] ?? { bg: tweaks.accent, fg: 'var(--surface)' };
+            const tagLabel = flyer ? t.viewFlyer : (ticketHref ? t.buyTickets : e.tag);
             return (
             <a
               key={e.title}
@@ -82,6 +90,21 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                 {e.date}
               </div>
               <div>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    fontSize: 10,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                    color: categoryStyle.fg,
+                    background: categoryStyle.bg,
+                    padding: '4px 10px',
+                    marginBottom: 10,
+                  } as React.CSSProperties}
+                >
+                  {e.tag}
+                </span>
                 <div style={{ fontFamily: `'${tweaks.titleFont}', serif`, fontSize: isMobile ? 20 : 30, color: 'var(--text)' }}>
                   {e.title}
                 </div>
@@ -104,6 +127,22 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                     {t.viewFlyer} →
                   </div>
                 )}
+                {!flyer && ticketHref && (
+                  <div
+                    data-flyer-label
+                    style={{
+                      color: tweaks.accent,
+                      fontSize: 12,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      marginTop: 8,
+                      opacity: isMobile ? 1 : 0,
+                      transition: 'opacity 200ms',
+                    } as React.CSSProperties}
+                  >
+                    {t.buyTickets} →
+                  </div>
+                )}
               </div>
               {!isMobile && (
                 <>
@@ -119,7 +158,7 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                         border: '1px solid var(--line)',
                       } as React.CSSProperties}
                     >
-                      {e.tag}
+                      {tagLabel}
                     </span>
                     <span style={{ color: tweaks.accent, fontSize: 20 }}>→</span>
                   </div>

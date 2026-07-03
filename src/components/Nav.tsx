@@ -96,7 +96,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
   );
 }
 
-export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean }) {
+export function Nav({ tweaks, scrolled, offsetTop = 0 }: { tweaks: Tweaks; scrolled: boolean; offsetTop?: number }) {
   const { isMobile } = useBreakpoint();
   const { lang } = useLang();
   const t = translations[lang];
@@ -111,7 +111,7 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
         <nav
           style={{
             position: 'fixed',
-            top: 0,
+            top: offsetTop,
             left: 0,
             right: 0,
             zIndex: 50,
@@ -181,7 +181,7 @@ export function Nav({ tweaks, scrolled }: { tweaks: Tweaks; scrolled: boolean })
     <nav
       style={{
         position: 'fixed',
-        top: 0,
+        top: offsetTop,
         left: 0,
         right: 0,
         zIndex: 50,

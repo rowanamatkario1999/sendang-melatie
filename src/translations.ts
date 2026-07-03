@@ -69,6 +69,13 @@ export const translations = {
       h2End: ' dragen.',
     },
 
+    eventsBanner: {
+      eyebrow: 'Agenda',
+      text: 'Kom naar onze events',
+      textAccent: ' – neem een kijkje!',
+      cta: 'Bekijk de agenda',
+    },
+
     events: {
       sectionLabel: 'Evenementen',
       h2: 'Kom erbij, ',
@@ -76,13 +83,22 @@ export const translations = {
       h2End: '.',
       intro: 'Van intieme gamelan-avonden tot het jaarlijkse Pasar Malam – onze agenda staat open voor iedereen.',
       viewFlyer: 'Zie flyer',
+      buyTickets: 'Tickets kopen?',
       items: [
-        { date: '12 JUL', title: 'Andhe Andhe Lumut met Gema Rasa', loc: 'Locatie volgt', tag: 'Voorstelling' },
+        {
+          date: '12 JUL',
+          title: 'Andhe Andhe Lumut met Gema Rasa',
+          loc: 'Locatie volgt',
+          tag: 'Voorstelling',
+          category: 'voorstelling' as const,
+          href: 'https://goudseschouwburg.nl/agenda/andhe-andhe-lumut-stichting-gema-rasa-10025503/',
+        },
         {
           date: '9 AUG',
           title: 'Herdenking Javaans-Surinaamse immigratie',
           loc: 'Wijkcentrum Mare Nostrum, Arubastraat 2, Alkmaar',
           tag: 'Herdenking',
+          category: 'herdenking' as const,
           flyer: '/assets/flyer-herdenking-javaans-surinaamse-1.jpg',
         },
         {
@@ -90,6 +106,7 @@ export const translations = {
           title: 'De Gesuikerde Onderneming x Krawitan Sendang Melatie',
           loc: 'Theater Madua',
           tag: 'Theater',
+          category: 'theater' as const,
           href: 'https://www.madua.nl/agenda-1',
         },
       ],
@@ -194,6 +211,13 @@ export const translations = {
       h2End: '.',
     },
 
+    eventsBanner: {
+      eyebrow: 'Jadwal',
+      text: 'Rawuha ing acara kita',
+      textAccent: ' – mrenea deloken!',
+      cta: 'Deloken jadwal',
+    },
+
     events: {
       sectionLabel: 'Acara',
       h2: 'Melu bareng, ',
@@ -201,13 +225,22 @@ export const translations = {
       h2End: '.',
       intro: 'Saka sore gamelan kang intim nganti Pasar Malam taunan – jadwal kita mbukak kanggo saben uwong.',
       viewFlyer: 'Delok flyer',
+      buyTickets: 'Tuku tiket?',
       items: [
-        { date: '12 JUL', title: 'Andhe Andhe Lumut karo Gema Rasa', loc: 'Papan nyusul', tag: 'Pagelaran' },
+        {
+          date: '12 JUL',
+          title: 'Andhe Andhe Lumut karo Gema Rasa',
+          loc: 'Papan nyusul',
+          tag: 'Pagelaran',
+          category: 'voorstelling' as const,
+          href: 'https://goudseschouwburg.nl/agenda/andhe-andhe-lumut-stichting-gema-rasa-10025503/',
+        },
         {
           date: '9 AGS',
           title: 'Pengetan Imigrasi Jawa-Suriname',
           loc: 'Wijkcentrum Mare Nostrum, Arubastraat 2, Alkmaar',
           tag: 'Pengetan',
+          category: 'herdenking' as const,
           flyer: '/assets/flyer-herdenking-javaans-surinaamse-1.jpg',
         },
         {
@@ -215,6 +248,7 @@ export const translations = {
           title: 'De Gesuikerde Onderneming x Krawitan Sendang Melatie',
           loc: 'Theater Madua',
           tag: 'Teater',
+          category: 'theater' as const,
           href: 'https://www.madua.nl/agenda-1',
         },
       ],
@@ -319,6 +353,13 @@ export const translations = {
       h2End: '.',
     },
 
+    eventsBanner: {
+      eyebrow: 'Agenda',
+      text: 'Come to our events',
+      textAccent: ' – take a look!',
+      cta: 'View the agenda',
+    },
+
     events: {
       sectionLabel: 'Events',
       h2: 'Join in, ',
@@ -326,13 +367,22 @@ export const translations = {
       h2End: '.',
       intro: 'From intimate gamelan evenings to the annual Pasar Malam – our agenda is open for everyone.',
       viewFlyer: 'View flyer',
+      buyTickets: 'Buy tickets?',
       items: [
-        { date: '12 JUL', title: 'Andhe Andhe Lumut with Gema Rasa', loc: 'Location to follow', tag: 'Performance' },
+        {
+          date: '12 JUL',
+          title: 'Andhe Andhe Lumut with Gema Rasa',
+          loc: 'Location to follow',
+          tag: 'Performance',
+          category: 'voorstelling' as const,
+          href: 'https://goudseschouwburg.nl/agenda/andhe-andhe-lumut-stichting-gema-rasa-10025503/',
+        },
         {
           date: '9 AUG',
           title: 'Javanese-Surinamese Immigration Commemoration',
           loc: 'Wijkcentrum Mare Nostrum, Arubastraat 2, Alkmaar',
           tag: 'Commemoration',
+          category: 'herdenking' as const,
           flyer: '/assets/flyer-herdenking-javaans-surinaamse-1.jpg',
         },
         {
@@ -340,6 +390,7 @@ export const translations = {
           title: 'De Gesuikerde Onderneming x Krawitan Sendang Melatie',
           loc: 'Theater Madua',
           tag: 'Theatre',
+          category: 'theater' as const,
           href: 'https://www.madua.nl/agenda-1',
         },
       ],

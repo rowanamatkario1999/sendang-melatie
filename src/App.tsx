@@ -4,6 +4,7 @@ import type { Tweaks } from './types';
 import { LangProvider } from './context/LanguageContext';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
+import { EventsBanner, BANNER_HEIGHT } from './components/EventsBanner';
 import { Over } from './components/Over';
 import { OnzeLogo } from './components/OnzeLogo';
 import { Crew } from './components/Crew';
@@ -17,6 +18,7 @@ function App() {
   const [tweaks, setTweaks] = useState<Tweaks>(TWEAK_DEFAULTS);
   const [scrolled, setScrolled] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [bannerOpen, setBannerOpen] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -39,7 +41,8 @@ function App() {
   return (
     <LangProvider>
     <div style={{ '--accent': tweaks.accent } as React.CSSProperties}>
-      <Nav tweaks={tweaks} scrolled={scrolled} />
+      <EventsBanner tweaks={tweaks} visible={bannerOpen} onClose={() => setBannerOpen(false)} />
+      <Nav tweaks={tweaks} scrolled={scrolled} offsetTop={bannerOpen ? BANNER_HEIGHT : 0} />
       <Hero tweaks={tweaks} />
       <Over tweaks={tweaks} />
       <OnzeLogo tweaks={tweaks} />
