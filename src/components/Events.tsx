@@ -42,10 +42,15 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
           </p>
         </div>
         <div style={{ marginTop: 64, borderTop: '1px solid var(--line)' }}>
-          {t.items.map((e) => (
+          {t.items.map((e) => {
+            const flyer = 'flyer' in e ? e.flyer : undefined;
+            const href = flyer ? flyer : ('href' in e && e.href ? e.href : '#contact');
+            const external = href.startsWith('http') || Boolean(flyer);
+            return (
             <a
               key={e.title}
-              href="#contact"
+              href={href}
+              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               style={{
                 display: 'grid',
                 gridTemplateColumns: isMobile ? '80px 1fr' : '120px 1fr 1fr auto',
@@ -55,8 +60,16 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                 borderBottom: '1px solid var(--line)',
                 transition: 'padding-left 200ms',
               } as React.CSSProperties}
-              onMouseEnter={(ev) => (ev.currentTarget.style.paddingLeft = '16px')}
-              onMouseLeave={(ev) => (ev.currentTarget.style.paddingLeft = '0')}
+              onMouseEnter={(ev) => {
+                ev.currentTarget.style.paddingLeft = '16px';
+                const label = ev.currentTarget.querySelector('[data-flyer-label]') as HTMLElement | null;
+                if (label) label.style.opacity = '1';
+              }}
+              onMouseLeave={(ev) => {
+                ev.currentTarget.style.paddingLeft = '0';
+                const label = ev.currentTarget.querySelector('[data-flyer-label]') as HTMLElement | null;
+                if (label) label.style.opacity = '0';
+              }}
             >
               <div
                 style={{
@@ -74,6 +87,22 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                 </div>
                 {isMobile && (
                   <div style={{ color: 'var(--text-dim)', fontSize: 13, marginTop: 4 }}>{e.loc}</div>
+                )}
+                {flyer && (
+                  <div
+                    data-flyer-label
+                    style={{
+                      color: tweaks.accent,
+                      fontSize: 12,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      marginTop: 8,
+                      opacity: isMobile ? 1 : 0,
+                      transition: 'opacity 200ms',
+                    } as React.CSSProperties}
+                  >
+                    {t.viewFlyer} →
+                  </div>
                 )}
               </div>
               {!isMobile && (
@@ -100,7 +129,8 @@ export function Events({ tweaks }: { tweaks: Tweaks }) {
                 <span style={{ color: tweaks.accent, fontSize: 18, alignSelf: 'center', justifySelf: 'end' }}>→</span>
               )}
             </a>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
