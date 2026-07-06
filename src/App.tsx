@@ -13,8 +13,11 @@ import { Media } from './components/Media';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { TweaksPanel } from './components/TweaksPanel';
+import { InternalEventsPage } from './components/InternalEventsPage';
 
 function App() {
+  const secret = new URLSearchParams(window.location.search).get('secret');
+  const showInternalPage = secret === 'invite-only';
   const [tweaks, setTweaks] = useState<Tweaks>(TWEAK_DEFAULTS);
   const [scrolled, setScrolled] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -40,19 +43,23 @@ function App() {
 
   return (
     <LangProvider>
-    <div style={{ '--accent': tweaks.accent } as React.CSSProperties}>
-      <EventsBanner tweaks={tweaks} visible={bannerOpen} onClose={() => setBannerOpen(false)} />
-      <Nav tweaks={tweaks} scrolled={scrolled} offsetTop={bannerOpen ? BANNER_HEIGHT : 0} />
-      <Hero tweaks={tweaks} />
-      <Over tweaks={tweaks} />
-      <OnzeLogo tweaks={tweaks} />
-      <Crew tweaks={tweaks} />
-      <Events tweaks={tweaks} />
-      <Media tweaks={tweaks} />
-      <Contact tweaks={tweaks} />
-      <Footer tweaks={tweaks} />
-      <TweaksPanel visible={editMode} tweaks={tweaks} setTweaks={setTweaks} />
-    </div>
+      {showInternalPage ? (
+        <InternalEventsPage tweaks={tweaks} />
+      ) : (
+        <div style={{ '--accent': tweaks.accent } as React.CSSProperties}>
+          <EventsBanner tweaks={tweaks} visible={bannerOpen} onClose={() => setBannerOpen(false)} />
+          <Nav tweaks={tweaks} scrolled={scrolled} offsetTop={bannerOpen ? BANNER_HEIGHT : 0} />
+          <Hero tweaks={tweaks} />
+          <Over tweaks={tweaks} />
+          <OnzeLogo tweaks={tweaks} />
+          <Crew tweaks={tweaks} />
+          <Events tweaks={tweaks} />
+          <Media tweaks={tweaks} />
+          <Contact tweaks={tweaks} />
+          <Footer tweaks={tweaks} />
+          <TweaksPanel visible={editMode} tweaks={tweaks} setTweaks={setTweaks} />
+        </div>
+      )}
     </LangProvider>
   );
 }
